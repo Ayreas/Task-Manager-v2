@@ -39,9 +39,18 @@ def hlavni_menu():
         volba = input ("Vyberte možnost (1-5): ") 
         if  volba == "1":
             print()     
-            Nazev = input("Název: ")
-            Popis = input("Popis: ")
-            pridat_ukol(Nazev, Popis)  
+            while True:
+                Nazev = input("Zadej název úkolu: ").strip()
+                if Nazev:
+                    break
+                print("❌ Název úkolu je povinný! Zkus to znovu.")
+
+            while True:
+                Popis = input("Zadej popis úkolu: ").strip()
+                if Popis:
+                    break
+                print("❌ Popis úkolu je povinný! Zkus to znovu.")
+            pridat_ukol(Nazev, Popis)               
         elif volba == "2":
             print()
             zobrazit_ukol()

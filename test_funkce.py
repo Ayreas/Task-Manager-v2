@@ -26,7 +26,7 @@ def test_pridat_ukol_pozitivni():
 def test_pridat_ukol_negativni():
     """"Test funkce kdy je prázdný popis úkolu -> vyhodí chybu"""
     with pytest.raises(TypeError):
-        pridat_ukol("Neplatný Úkol")  # Zadán jen název, ale je nutný i popis úkolu.
+        pridat_ukol("Neplatný Úkol", interaktivni=False)  # Zadán jen název, ale je nutný i popis úkolu.
 
 # Test pozitivní a negativní pro aktualizovat_ukol
 def test_aktualizovat_ukol_pozitivni():

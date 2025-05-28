@@ -4,12 +4,28 @@ from mysql.connector import Error    # Musím naimportovat Error zvlášť aby f
 from db import pripojeni_db
 from pomocne_funkce import odstranit_ukol_podle_id, aktualizovat_ukol_podle_id
 
-def pridat_ukol(Nazev, Popis):
+def pridat_ukol(Nazev=None, Popis=None, interaktivni=True):
     """Přidá úkol do databáze. Ošetření prazdných vstupů i nečekané události (př: spadne databáze)."""
-    if not Nazev.strip() or not Popis.strip():
-        print("❌ Název i popis úkolů jsou povinné položky! Zkus to znovu.")
-        return
-    
+    if not interaktivni:
+        if Nazev is None or not Nazev.strip():
+            raise TypeError("❌ Název úkolu je povinný! Zkus to znovu.")
+        if Popis is None or not Popis.strip():
+            raise TypeError("❌ Popis úkolu je povinný! Zkus to znovu.")
+
+    if not Nazev or not Nazev.strip():
+        while True:
+            Nazev = input("Zadej název úkolu: ").strip()
+            if Nazev:
+                break
+            print("❌ Název úkolu je povinný! Zkus to znovu.")
+
+    if not Popis or not Popis.strip():
+        while True:
+            Popis = input("Zadej popis úkolu: ").strip()
+            if Popis:
+                break
+            print("❌ Popis úkolu je povinný! Zkus to znovu.")
+ 
     conn = pripojeni_db()
     if conn is None:
         return
@@ -145,6 +161,7 @@ def aktualizovat_ukol():
             if zpet == 'a':
                 aktualizovat_ukol_podle_id(vybrane_id, puvodni_stav, conn)
                 print("↩️ Změna byla vrácena zpět.")
+                break
     
             elif zpet == 'n':
                 print("✅ Změna potvrzena.")
